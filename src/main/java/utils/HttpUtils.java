@@ -24,4 +24,22 @@ public class HttpUtils {
         scan.close();
         return jsonStr;
     }
+
+    public static String fetchData2(String _url) throws MalformedURLException, IOException {
+        URL url = new URL(_url);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        //con.setRequestProperty("Accept", "application/json;charset=UTF-8");
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("x-rapidapi-key", "d12379afb6msh4e1abe29e50bca0p15e49ejsn56af46069613");
+        con.setRequestProperty("x-rapidapi-host", "realtor.p.rapidapi.com");
+
+        Scanner scan = new Scanner(con.getInputStream());
+        String jsonStr = null;
+        if (scan.hasNext()) {
+            jsonStr = scan.nextLine();
+        }
+        scan.close();
+        return jsonStr;
+    }
 }
