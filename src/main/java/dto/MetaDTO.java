@@ -17,6 +17,15 @@ public class MetaDTO {
     */
     
     private String build;
+
+    public MetaDTO(String build) {
+        this.build = build;
+    }
+    
+    
+    
+    
+    
     private String schema;
     
     private TrackingParamsDTO tracking_paramsDTO;

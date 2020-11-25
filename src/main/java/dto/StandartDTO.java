@@ -9,19 +9,19 @@ public class StandartDTO {
     
     private String time;
     
-    private MetaDTO metaDTO;
+    private AllDTO allDTO;
     
 
     public StandartDTO(PropertyDTO factDTO, String time) {
         
     }
 
-    public StandartDTO(MetaDTO metaDTO, String time) {
-        this.metaDTO = metaDTO;
+    public StandartDTO(AllDTO allDTO, String time) {
+        this.allDTO = allDTO;
     }
 
-    public MetaDTO getMetaDTO() {
-        return metaDTO;
+    public AllDTO getAllDTO() {
+        return allDTO;
     }
     
     
