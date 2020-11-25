@@ -11,13 +11,19 @@ public class StandartDTO {
     
     private AllDTO allDTO;
     
+    private RealtorDTO realtorDTO;
+    
 
     public StandartDTO(PropertyDTO factDTO, String time) {
         
     }
 
-    public StandartDTO(AllDTO allDTO, String time) {
-        this.allDTO = allDTO;
+//    public StandartDTO(AllDTO allDTO, String time) {
+//        this.allDTO = allDTO;
+//    }
+    
+    public StandartDTO(RealtorDTO realtorDTO, String time) {
+        this.realtorDTO = realtorDTO;
     }
 
     public AllDTO getAllDTO() {
