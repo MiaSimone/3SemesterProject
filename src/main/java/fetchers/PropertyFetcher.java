@@ -3,16 +3,8 @@ package fetchers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dto.AllDTO;
-import dto.MetaDTO;
-import dto.PropertyDTO;
 import dto.RealtorDTO;
 import dto.StandartDTO;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -24,51 +16,16 @@ import utils.HttpUtils;
  * @author miade
  */
 
-//class Properties{
-//    public String property_id;
-//    public String rdc_web_url;
-//    public String prop_type;
-//    Address address;
-//    public String price;
-//    BuildingSize building_size;
-//    public String thumbnail;
-//    
-//}
-//
-//class Address{
-//    public String city;
-//    public String line;
-//    public String postal_code;
-//    public String state_code;
-//    public String state;
-//    public String county;
-//}
-//
-//class BuildingSize{
-//    public String size;
-//    public String units;
-//}
-//
-//class Outer{
-//    public List<Properties> properties;
-//    Meta meta;
-//}
-//
-//class Meta{
-//    public String build;
-//}
-//
-
 
 public class PropertyFetcher {
     
     
-    private static final String FACT_SERVER = "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York%20City&limit=1&offset=0&state_code=NY&sort=relevance";
+    private static final String FACT_SERVER = "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York%20City&limit=1";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     
     
-    public static String responseFromExternalServerParrallel(ExecutorService threadPool, final Gson gson) throws Exception{
+    public static String responseFromExternalServerParrallel(ExecutorService threadPool, final Gson gson, String FACT_SERVER) throws Exception{
         long start = System.nanoTime();
         Callable<RealtorDTO> task = new Callable<RealtorDTO>(){
             @Override
@@ -115,36 +72,4 @@ public class PropertyFetcher {
 //        System.out.println("SIZE: " + outer.properties.get(0).building_size.size + " " + outer.properties.get(0).building_size.units);
 //    }
     
-    /*
-    public static String responseFromExternalServerParrallel(ExecutorService threadPool, final Gson gson) throws Exception{
-        long start = System.nanoTime();
-        
-        Callable<PropertyDTO> task = new Callable<PropertyDTO>(){
-            @Override
-            public PropertyDTO call() throws Exception {
-                String data = HttpUtils.fetchData2(FACT_SERVER);
-                System.out.println("DATA: " + data);
-                PropertyDTO propertyDTO = GSON.fromJson(data, PropertyDTO.class);
-                System.out.println("DTO: " + propertyDTO.getAddress());
-                return propertyDTO;
-            }
-            
-        };
-        Future<PropertyDTO> futureFact = threadPool.submit(task);
-        
-        PropertyDTO property = futureFact.get(30, TimeUnit.SECONDS);
-        
-        long end = System.nanoTime(); 
-        String time = "Time Parallel: " + ((end-start)/1_000_000) + " ms.";
-        
-        //StandartDTO sDTO = new StandartDTO(property, time);
-        
-        //String standartJSON = gson.toJson(sDTO);
-        //System.out.println(property.getPrice());
-        
-        String standartJSON = gson.toJson(property);
-        System.out.println(standartJSON);
-        return standartJSON;
-    }
-*/
 }

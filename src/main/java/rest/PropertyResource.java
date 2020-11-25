@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -29,47 +30,16 @@ public class PropertyResource {
     private static ExecutorService es = Executors.newCachedThreadPool();
     private static String cachedResponse;
     
+    
     @GET
+    @Path("/{city}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getCharacters() throws Exception {
-        /*
-        URL url = new URL("https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York%20City&limit=1&offset=0&state_code=NY&sort=relevance");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Accept", "application/json");
-        con.setRequestProperty("x-rapidapi-key", "d12379afb6msh4e1abe29e50bca0p15e49ejsn56af46069613");
-        con.setRequestProperty("x-rapidapi-host", "realtor.p.rapidapi.com");
-        */
-        
-        /*
-        HttpResponse<JsonNode> response = Unirest.get("https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York%20City&limit=1&offset=0&state_code=NY&sort=relevance")
-	.header("x-rapidapi-key", "d12379afb6msh4e1abe29e50bca0p15e49ejsn56af46069613")
-	.header("x-rapidapi-host", "realtor.p.rapidapi.com")
-	.asJson();
-        
-        JSONObject myObject = response.getBody().getObject();
-        
-        System.out.println(myObject);
-        //return GSON.toJson(response.getBody());
-        */
-        
-        
-        
-        /*
-        HttpResponse<JsonNode> response = Unirest.get("https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York%20City&limit=1&offset=0&state_code=NY&sort=relevance")
-	.header("x-rapidapi-key", "d12379afb6msh4e1abe29e50bca0p15e49ejsn56af46069613")
-	.header("x-rapidapi-host", "realtor.p.rapidapi.com")
-	.asJson();
-        
-        Gson gson = new Gson();
-        String responseJSONString = response.getBody().toString();
-        
-        return responseJSONString;
-*/
-        
-        
-        String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON);
-        System.out.println("RESULT: " + result);
+    public String getCharacters(@PathParam("city") String city) throws Exception {
+        if (city.contains(" ")){
+            city = city.replace(" ", "%20");
+        }
+        String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON, 
+                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city="+city+"&limit=1");
         cachedResponse = result;
         return result;
     }
