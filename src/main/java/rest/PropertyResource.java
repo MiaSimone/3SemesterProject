@@ -69,6 +69,7 @@ public class PropertyResource {
         
         
         String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON);
+        System.out.println("RESULT: " + result);
         cachedResponse = result;
         return result;
     }
