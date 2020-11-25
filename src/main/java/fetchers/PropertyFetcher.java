@@ -77,7 +77,7 @@ public class PropertyFetcher {
                 System.out.println("DATA: " + data);
                 //AllDTO all = GSON.fromJson(data, AllDTO.class);
                 RealtorDTO realtorDTO = GSON.fromJson(data, RealtorDTO.class);
-                System.out.println("DTO: " + realtorDTO);
+                System.out.println("DTO: " + realtorDTO.properties);
                 return realtorDTO;
             }
             
@@ -91,7 +91,7 @@ public class PropertyFetcher {
         
         StandartDTO sDTO = new StandartDTO(realtor, time);
         
-        String standartJSON = gson.toJson("");
+        String standartJSON = gson.toJson(sDTO);
         
         System.out.println(standartJSON);
         
