@@ -41,7 +41,7 @@ public class PropertyResource {
         }
 
         String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON, 
-                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city="+city+"&limit=1");
+                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city="+city+"&limit=10");
         cachedResponse = result;
         return result;
     }
