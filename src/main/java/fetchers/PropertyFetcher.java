@@ -19,18 +19,16 @@ import utils.HttpUtils;
 
 public class PropertyFetcher {
     
-    
-    private static final String FACT_SERVER = "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York%20City&limit=1";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     
     
     
-    public static String responseFromExternalServerParrallel(ExecutorService threadPool, final Gson gson, String FACT_SERVER) throws Exception{
+    public static String responseFromExternalServerParrallel(ExecutorService threadPool, final Gson gson, String REALTOR_SERVER) throws Exception{
         long start = System.nanoTime();
         Callable<RealtorDTO> task = new Callable<RealtorDTO>(){
             @Override
             public RealtorDTO call() throws Exception {
-                String data = HttpUtils.fetchData2(FACT_SERVER);
+                String data = HttpUtils.fetchData2(REALTOR_SERVER);
                 System.out.println("DATA: " + data);
                 //AllDTO all = GSON.fromJson(data, AllDTO.class);
                 RealtorDTO realtorDTO = GSON.fromJson(data, RealtorDTO.class);

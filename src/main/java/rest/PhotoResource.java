@@ -3,9 +3,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
+import dto.StandartDTO;
+import fetchers.PhotoFetcher;
 import fetchers.PropertyFetcher;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,34 +15,39 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
-import utils.HttpUtils;
+
 /**
  *
  * @author miade
  */
-@Path("properties")
-public class PropertyResource {
+
+@Path("photo")
+public class PhotoResource {
+    
     
     @Context
     private UriInfo context;
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static ExecutorService es = Executors.newCachedThreadPool();
     private static String cachedResponse;
-    
+    private String key = "AIzaSyBiq63f5HkI1RqsxVsVcgNcVXKQIhdi3LQ";
     
     @GET
-    @Path("/{city}")
+    @Path("placeref/{city}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getCharacters(@PathParam("city") String city) throws Exception {
-        
+    public String getPlaceRef(@PathParam("city") String city) throws Exception {
         if (city.contains(" ")){
             city = city.replace(" ", "%20");
         }
-
-        String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON, 
-                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city="+city+"&limit=1");
+        String placeID = PhotoFetcher.retrievePlaceID(es, GSON, 
+                "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="
+                        +city+"&inputtype=textquery&key="+key);
+        
+        String result = PhotoFetcher.retrievePhotoRef(es, GSON, 
+                "https://maps.googleapis.com/maps/api/place/details/json?place_id="+placeID+"&key="+key);
         cachedResponse = result;
         return result;
     }
     
 }
+
