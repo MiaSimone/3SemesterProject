@@ -19,7 +19,7 @@ import javax.ws.rs.core.UriInfo;
 import utils.HttpUtils;
 /**
  *
- * @author miade
+ * @author miade and selina
  */
 @Path("properties")
 public class PropertyResource {
@@ -30,6 +30,15 @@ public class PropertyResource {
     private static ExecutorService es = Executors.newCachedThreadPool();
     private static String cachedResponse;
     
+    @GET
+    @Produces
+    @Path("/all")
+    public String getAllProperties() throws Exception {
+        String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON, 
+                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York&limit=10&offset=0&state_code=NY&sort=relevance");
+        cachedResponse = result;
+        return result;
+    }
     
     @GET
     @Path("/{city}")

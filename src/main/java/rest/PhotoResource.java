@@ -46,7 +46,8 @@ public class PhotoResource {
           key = System.getenv("MY_API_KEY");
         } else {
             try {
-                File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject/apikey.txt");
+                //File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject/apikey.txt");
+                File myObj = new File("C:/Users/soend/Documents/3.semester/week48/3SemesterProject-Backend/apikey.txt");
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
                   String data = myReader.nextLine();
