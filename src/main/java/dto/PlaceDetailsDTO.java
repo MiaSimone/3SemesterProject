@@ -1,7 +1,9 @@
 
 package dto;
 
+import entities.Photo;
 import entities.PhotoResult;
+import java.util.List;
 
 
 /**
@@ -20,4 +22,3 @@ public class PlaceDetailsDTO {
     public PlaceDetailsDTO() {}
     
 }
-
