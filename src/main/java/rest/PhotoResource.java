@@ -39,23 +39,24 @@ public class PhotoResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getPlaceRef(@PathParam("city") String city) throws Exception {
         String key = "";
-        try {
-            File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject/apikey.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-              String data = myReader.nextLine();
-              key = data;
-            }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
         
         //String key = "REAL VALUE"; //We will hide this in a gitignored file tomorrow
         boolean isDeployed = (System.getenv("DEPLOYED") != null);
         if(isDeployed) {
           key = System.getenv("MY_API_KEY");
+        } else {
+            try {
+                File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject/apikey.txt");
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                  String data = myReader.nextLine();
+                  key = data;
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
         }
         
         if (city.contains(" ")){
