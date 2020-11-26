@@ -30,7 +30,7 @@ public class PhotoResource {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static ExecutorService es = Executors.newCachedThreadPool();
     private static String cachedResponse;
-    private String key = "AIzaSyBiq63f5HkI1RqsxVsVcgNcVXKQIhdi3LQ";
+    private String key = "";
     
     @GET
     @Path("placeref/{city}")
