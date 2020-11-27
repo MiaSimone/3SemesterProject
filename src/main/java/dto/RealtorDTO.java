@@ -4,13 +4,21 @@ import java.util.List;
 
 /**
  *
- * @author Malthe
+ * @author Malthe and Selina
  */
 public class RealtorDTO {
     public List<Properties> properties;
     
-    public RealtorDTO() {}
     
+    //Nyt, ikke testet 
+    public RealtorDTO(List<Properties> pList) {
+    this.properties = pList;
+    }
+    
+    //Nyt, ikke testet
+    public List<Properties> getPropertyList() {
+        return properties;
+    }
 }
 
 class Properties{
