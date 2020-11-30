@@ -1,25 +1,20 @@
 package dto;
 
+import entities.GeoCityDetails;
+
 /**
  *
  * @author Malthe
  */
 public class GeoCityDetailsDTO {
-    public DetailsData data;
+    public GeoCityDetails data;
 
-    public GeoCityDetailsDTO(DetailsData data) {
+    public GeoCityDetailsDTO(GeoCityDetails data) {
         this.data = data;
     }
 
-    public DetailsData getData() {
+    public GeoCityDetails getData() {
         return data;
     }
     
-}
-
-class DetailsData{
-    public String city;
-    public String country;
-    public String elevationMeters;
-    public String population;
 }

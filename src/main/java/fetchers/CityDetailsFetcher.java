@@ -43,16 +43,9 @@ public class CityDetailsFetcher {
         
         GeoCityDTO geoDB = futureFact.get(30, TimeUnit.SECONDS);
         
-        long end = System.nanoTime(); 
-        String time = "Time Parallel: " + ((end-start)/1_000_000) + " ms.";
+        String wikiId = geoDB.data.get(0).wikiDataId;
         
-        StandartDTO sDTO = new StandartDTO(geoDB, time);
-        
-        String standartJSON = gson.toJson(sDTO);
-        
-        System.out.println(standartJSON);
-        
-        return standartJSON;
+        return wikiId;
     }
     
     public static String responseFromGeoDBCityDetails(ExecutorService threadPool, final Gson gson, String GEODBCITY_SERVER) throws Exception{
