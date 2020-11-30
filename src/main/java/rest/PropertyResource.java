@@ -31,16 +31,6 @@ public class PropertyResource {
     private static String cachedResponse;
     
     @GET
-    @Produces
-    @Path("/all")
-    public String getAllProperties() throws Exception {
-        String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON, 
-                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?limit=10");
-        cachedResponse = result;
-        return result;
-    }
-    
-    @GET
     @Path("/{city}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getCharacters(@PathParam("city") String city) throws Exception {
