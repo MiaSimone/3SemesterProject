@@ -37,11 +37,14 @@ public class HttpUtils {
         con.setRequestProperty("x-rapidapi-host", "wft-geo-db.p.rapidapi.com");
 
         Scanner scan = new Scanner(con.getInputStream());
-        String jsonStr = null;
-        if (scan.hasNext()) {
-            jsonStr = scan.nextLine();
+        String jsonStr = "";
+        
+        while(scan.hasNext()) {
+          jsonStr += scan.nextLine();
         }
+        
         scan.close();
+        
         return jsonStr;
     }
     
@@ -55,11 +58,14 @@ public class HttpUtils {
         con.setRequestProperty("x-rapidapi-host", "wft-geo-db.p.rapidapi.com");
 
         Scanner scan = new Scanner(con.getInputStream());
-        String jsonStr = null;
-        if (scan.hasNext()) {
-            jsonStr = scan.nextLine();
+        String jsonStr = "";
+        
+        while(scan.hasNext()) {
+          jsonStr += scan.nextLine();
         }
+        
         scan.close();
+        
         return jsonStr;
     }
     

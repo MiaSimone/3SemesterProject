@@ -4,3 +4,5 @@
 /nbproject/
 
 apikey.txt
+
+.env

@@ -39,12 +39,16 @@ public class CityDetailsResource {
             city = city.replace(" ", "%20");
         }
 
+        
         String cityWikiId = CityDetailsFetcher.responseFromGeoDBCity(es, GSON, 
                 "https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=" + city);
+        
+        Thread.sleep(2000);
         
         String cityDetails = CityDetailsFetcher.responseFromGeoDBCityDetails(es, GSON, 
                 "https://wft-geo-db.p.rapidapi.com/v1/geo/cities/" + cityWikiId);
         cachedResponse = cityDetails;
+        
         return cityDetails;
     }
     

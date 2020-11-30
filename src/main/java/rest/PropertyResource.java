@@ -35,7 +35,7 @@ public class PropertyResource {
     @Path("/all")
     public String getAllProperties() throws Exception {
         String result = PropertyFetcher.responseFromExternalServerParrallel(es, GSON, 
-                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?city=New%20York&limit=10&offset=0&state_code=NY&sort=relevance");
+                "https://realtor.p.rapidapi.com/properties/v2/list-for-sale?limit=10");
         cachedResponse = result;
         return result;
     }

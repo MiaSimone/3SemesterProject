@@ -1,6 +1,7 @@
 
 package dto;
 
+import entities.GeoCityDetails;
 import entities.Photo;
 import entities.PhotoCandidates;
 import java.util.List;

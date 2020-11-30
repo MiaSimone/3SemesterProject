@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import dto.StandartDTO;
 import fetchers.PhotoFetcher;
 import fetchers.PropertyFetcher;
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.ws.rs.GET;
@@ -38,27 +39,21 @@ public class PhotoResource {
     @Path("placeref/{city}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getPlaceRef(@PathParam("city") String city) throws Exception {
-        String key = "";
-        
-        //String key = "REAL VALUE"; //We will hide this in a gitignored file tomorrow
+        Dotenv dotenv = Dotenv.load(); 
+        String key;
         boolean isDeployed = (System.getenv("DEPLOYED") != null);
-        if(isDeployed) {
+        if(isDeployed){
+          //Will read the environment variable set in your droplets docker-compose.yml file
           key = System.getenv("MY_API_KEY");
-        } else {
-            try {
-                //File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject/apikey.txt");
-                File myObj = new File("C:/Users/soend/Documents/3.semester/week48/3SemesterProject-Backend/apikey.txt");
-                Scanner myReader = new Scanner(myObj);
-                while (myReader.hasNextLine()) {
-                  String data = myReader.nextLine();
-                  key = data;
-                }
-                myReader.close();
-            } catch (FileNotFoundException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
-            }
         }
+        else {
+          //Will read the key from the .env file in development
+          
+          key = dotenv.get("MY_API_KEY"); 
+        }
+        System.out.println("HEEEEEEEEEEEEEER");
+        System.out.println("Value of my secret key: "+key);
+
         
         if (city.contains(" ")){
             city = city.replace(" ", "%20");
