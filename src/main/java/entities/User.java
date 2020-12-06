@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,74 +20,102 @@ import org.mindrot.jbcrypt.BCrypt;
 @Table(name = "users")
 public class User implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  @Id
-  @Basic(optional = false)
-  @NotNull
-  @Column(name = "user_name", length = 25)
-  private String userName;
-  @Basic(optional = false)
-  @NotNull
-  @Size(min = 1, max = 255)
-  @Column(name = "user_pass")
-  private String userPass;
-  @JoinTable(name = "user_roles", joinColumns = {
-    @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
-    @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
-  @ManyToMany
-  private List<Role> roleList = new ArrayList<>();
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "user_name", length = 25)
+    private String userName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "user_pass")
+    private String userPass;
+    @JoinTable(name = "user_roles", joinColumns = {
+        @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
+        @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
+    @ManyToMany
+    private List<Role> roleList = new ArrayList<>();
+//    @ManyToMany(
+//            cascade = {CascadeType.PERSIST,
+//                    CascadeType.MERGE
+//            })
+    @ManyToMany
+    @JoinTable (name = "users_FAVORITEPROPERTY")
+    private List<FavoriteProperty> faveProps = new ArrayList<>();
 
-  public List<String> getRolesAsStrings() {
-    if (roleList.isEmpty()) {
-      return null;
+    public List<String> getRolesAsStrings() {
+        if (roleList.isEmpty()) {
+            return null;
+        }
+        List<String> rolesAsStrings = new ArrayList<>();
+        roleList.forEach((role) -> {
+            rolesAsStrings.add(role.getRoleName());
+        });
+        return rolesAsStrings;
     }
-    List<String> rolesAsStrings = new ArrayList<>();
-    roleList.forEach((role) -> {
-        rolesAsStrings.add(role.getRoleName());
-      });
-    return rolesAsStrings;
-  }
 
-  public User() {}
-
-  //TODO Change when password is hashed
-   public boolean verifyPassword(String pw){
-        return(BCrypt.checkpw(pw, this.userPass));
+    public User() {
     }
 
-  public User(String userName, String userPass) {
-    this.userName = userName;
-    this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
-  }
+    //TODO Change when password is hashed
+    public boolean verifyPassword(String pw) {
+        return (BCrypt.checkpw(pw, this.userPass));
+    }
 
+    public User(String userName, String userPass) {
+        this.userName = userName;
+        this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
+    }
 
-  public String getUserName() {
-    return userName;
-  }
+    public String getUserName() {
+        return userName;
+    }
 
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-  public String getUserPass() {
-    return this.userPass;
-  }
+    public String getUserPass() {
+        return this.userPass;
+    }
 
     public void setUserPass(String userPass) {
         this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt(12));
     }
 
- 
-  public List<Role> getRoleList() {
-    return roleList;
-  }
+    public List<Role> getRoleList() {
+        return roleList;
+    }
 
-  public void setRoleList(List<Role> roleList) {
-    this.roleList = roleList;
-  }
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
-  public void addRole(Role userRole) {
-    roleList.add(userRole);
-  }
+    public void addRole(Role userRole) {
+        roleList.add(userRole);
+    }
+
+    public List<FavoriteProperty> getFaveProps() {
+        return faveProps;
+    }
+
+    public void setFaveProps(List<FavoriteProperty> faveProps) {
+        this.faveProps = faveProps;
+    }
+    
+    public void addFaveHouse(FavoriteProperty faveProp) {
+        this.faveProps.add(faveProp);
+    }
+    
+    public void removeFaveProp(FavoriteProperty faveHouse) {
+        FavoriteProperty removeFaveProp = null;
+        for (FavoriteProperty faveProp_ : this.faveProps) {
+            if (faveHouse.getPropId().equals(faveProp_.getPropId())){
+                removeFaveProp = faveProp_;
+            }
+        }
+        if (removeFaveProp != null) this.faveProps.remove(removeFaveProp);
+    }
 
 }
