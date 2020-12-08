@@ -22,11 +22,17 @@ public class FavoritePropertyDTO {
     private String state;
     private String county;
     private String price;
+    private List<FavoriteProperty> favorites;
 
     public FavoritePropertyDTO() {
     }
     
+    public FavoritePropertyDTO(List<FavoriteProperty> faveProps) {
+        this.favorites = faveProps;
+    }
+    
     //Constructor for making personDTOs with data from the DB
+    
     public FavoritePropertyDTO(FavoriteProperty faveProp) {
         this.propId = faveProp.getPropId();
         this.rdcWebUrl = faveProp.getRdcWebUrl();

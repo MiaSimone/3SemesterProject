@@ -43,7 +43,7 @@ public class FavoritePropertyFacade {
     public FavoritePropertyDTO addFaveProp(FavoritePropertyDTO faveProp) throws AlreadyInUseException {
         EntityManager em = emf.createEntityManager();
         FavoriteProperty entFaveProp = new FavoriteProperty();
-        
+        System.out.println("ID FACADE: " + faveProp.getPropId());
         entFaveProp.setPropId(faveProp.getPropId());
         entFaveProp.setRdcWebUrl(faveProp.getRdcWebUrl());
         entFaveProp.setType(faveProp.getType());
@@ -71,39 +71,40 @@ public class FavoritePropertyFacade {
         }
     }
     
-    public List<FavoritePropertyDTO> getAllFaveProps() throws NotFoundException {
+    public FavoritePropertyDTO getAllFaveProps() throws NotFoundException {
         EntityManager em = emf.createEntityManager();
         try {
-            List<FavoritePropertyDTO> favePropsList = em.createQuery("SELECT f FROM FavoriteProperty f").getResultList();
-            return favePropsList;
+            List<FavoriteProperty> favePropsList = em.createQuery("SELECT f FROM FavoriteProperty f").getResultList();
+            FavoritePropertyDTO faveDTO = new FavoritePropertyDTO(favePropsList);
+            return faveDTO;
         } finally {
             em.close();
         }
     }
     
-//    public String deleteFavePropById(String id) throws NotFoundException {
-//        EntityManager em = emf.createEntityManager();
-//        try {
-//            em.getTransaction().begin();
-//            Query query = em.createQuery("DELETE FROM FavoriteProperty f WHERE f.propId = :id");
-//            query.setParameter("id", id);
-//            query.executeUpdate();
-//            em.getTransaction().commit();
-//            return "Property with ID: " + id + " successfully deleted from DB.";
-//        } catch (Exception e) {
-//            throw new NotFoundException("Property with that ID does not exist");
-//        } finally {
-//            em.close();
-//        }
-//    }
+    public String deleteFavePropById(String id) throws NotFoundException {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            Query query = em.createQuery("DELETE FROM FavoriteProperty f WHERE f.propId = :id");
+            query.setParameter("id", id);
+            query.executeUpdate();
+            em.getTransaction().commit();
+            return "Property with ID: " + id + " successfully deleted from DB.";
+        } catch (Exception e) {
+            throw new NotFoundException("Property with that ID does not exist");
+        } finally {
+            em.close();
+        }
+    }
     
     public String fillDB() {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             
-            FavoriteProperty fp1 = new FavoriteProperty("ABC123", "www.url.com", "House", "300", "Square KM", "www.thumbnail.com", "New Test City", "Test Avenue 1", "54321", "NTC", "Testsas", "Test County", "1,000,000");
-            FavoriteProperty fp2 = new FavoriteProperty("DEF456", "www.url.com", "Condo", "100", "Square KM", "www.thumbnail.com", "New Test City", "Test Road 9", "98765", "NTC", "Testsas", "Test County", "300,000");
+            FavoriteProperty fp1 = new FavoriteProperty("ABC123", "www.url.com", "House", "300", "Square KM", "www.thumbnail.com", "New York City", "Test Avenue 1", "54321", "NTC", "Testsas", "Test County", "1,000,000");
+            FavoriteProperty fp2 = new FavoriteProperty("DEF456", "www.url.com", "Condo", "100", "Square KM", "www.thumbnail.com", "New York City", "Test Road 9", "98765", "NTC", "Testsas", "Test County", "300,000");
             
             em.persist(fp1);
             em.persist(fp2);

@@ -4,7 +4,6 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fetchers.PhotoFetcher;
-// import io.github.cdimascio.dotenv.Dotenv;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

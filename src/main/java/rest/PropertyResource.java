@@ -84,16 +84,16 @@ public class PropertyResource {
         }
     }
     
-//    @DELETE
-//    @Path("/deleteprop/{id}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String deleteFavePropById(@PathParam("id") String propId) {
-//        try {
-//            return GSON.toJson(FACADE.deleteFavePropById(propId));
-//        } catch (NotFoundException ex) {
-//            throw new WebApplicationException(ex.getMessage(), 400);
-//        }
-//    }
+    @DELETE
+    @Path("/deleteprop/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteFavePropById(@PathParam("id") String propId) {
+        try {
+            return GSON.toJson(FACADE.deleteFavePropById(propId));
+        } catch (NotFoundException ex) {
+            throw new WebApplicationException(ex.getMessage(), 400);
+        }
+    }
     
     // Only use this endpoint ONCE if your db is empty.
     @GET
