@@ -72,18 +72,6 @@ public class PropertyResource {
         }
     }
     
-    @POST
-    @Path("/saveprop")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String addToFavorites(FavoritePropertyDTO faveProp) {
-        try {
-            return GSON.toJson(FACADE.addFaveProp(faveProp));
-        } catch (AlreadyInUseException ex) {
-            throw new WebApplicationException(ex.getMessage(), 400);
-        }
-    }
-    
     @DELETE
     @Path("/deleteprop/{id}")
     @Produces(MediaType.APPLICATION_JSON)

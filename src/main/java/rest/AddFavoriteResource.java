@@ -3,10 +3,10 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dto.TestDTO;
-import entities.TestEntity;
+import dto.AddFavoriteDTO;
+import entities.AddFavoriteEntity;
 import errorhandling.AlreadyInUseException;
-import facades.TestFacade;
+import facades.AddFavoriteFacade;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,13 +18,13 @@ import javax.ws.rs.WebApplicationException;
 import utils.EMF_Creator;
 
 //Todo Remove or change relevant parts before ACTUAL use
-@Path("test")
-public class TestResource {
+@Path("properties")
+public class AddFavoriteResource {
 
     
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     
-    private static final TestFacade FACADE =  TestFacade.getFacadeExample(EMF);
+    private static final AddFavoriteFacade FACADE =  AddFavoriteFacade.getFacadeExample(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
  
    
@@ -35,13 +35,14 @@ public class TestResource {
     }
 
 
-    @POST	
+    @POST
+    @Path("/saveprop")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String addTestObject(String object){
         try {
-            TestDTO tDTO = GSON.fromJson(object, TestDTO.class);
-            TestEntity t = new TestEntity(
+            AddFavoriteDTO tDTO = GSON.fromJson(object, AddFavoriteDTO.class);
+            AddFavoriteEntity t = new AddFavoriteEntity(
                 tDTO.getProp_id(),
                 tDTO.getRdc_web_url(),
                 tDTO.getProp_type(),
@@ -57,7 +58,7 @@ public class TestResource {
                 tDTO.getPrice()
             );
         
-            TestDTO tAdded = FACADE.addTestObject(t);
+            AddFavoriteDTO tAdded = FACADE.addTestObject(t);
             return GSON.toJson(tAdded);
         } catch (AlreadyInUseException ex) {
             throw new WebApplicationException(ex.getMessage(), 400);

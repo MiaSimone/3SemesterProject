@@ -40,37 +40,6 @@ public class FavoritePropertyFacade {
         return emf.createEntityManager();
     }
     
-    public FavoritePropertyDTO addFaveProp(FavoritePropertyDTO faveProp) throws AlreadyInUseException {
-        EntityManager em = emf.createEntityManager();
-        FavoriteProperty entFaveProp = new FavoriteProperty();
-        System.out.println("ID FACADE: " + faveProp.getPropId());
-        entFaveProp.setPropId(faveProp.getPropId());
-        entFaveProp.setRdcWebUrl(faveProp.getRdcWebUrl());
-        entFaveProp.setType(faveProp.getType());
-        entFaveProp.setSize(faveProp.getSize());
-        entFaveProp.setUnits(faveProp.getUnits());
-        entFaveProp.setThumbnail(faveProp.getThumbnail());
-        entFaveProp.setCity(faveProp.getCity());
-        entFaveProp.setLine(faveProp.getLine());
-        entFaveProp.setPostalCode(faveProp.getPostalCode());
-        entFaveProp.setStateCode(faveProp.getStateCode());
-        entFaveProp.setState(faveProp.getState());
-        entFaveProp.setCounty(faveProp.getCounty());
-        entFaveProp.setPrice(faveProp.getPrice());
-        
-        try {
-            em.getTransaction().begin();
-            em.persist(entFaveProp);
-            em.getTransaction().commit();
-            return faveProp;
-        } catch (Exception e) {
-            throw new AlreadyInUseException("This property is already saved to favorites.");
-        }
-            finally {
-            em.close();
-        }
-    }
-    
     public FavoritePropertyDTO getAllFaveProps() throws NotFoundException {
         EntityManager em = emf.createEntityManager();
         try {
@@ -90,7 +59,7 @@ public class FavoritePropertyFacade {
             query.setParameter("id", id);
             query.executeUpdate();
             em.getTransaction().commit();
-            return "Property with ID: " + id + " successfully deleted from DB.";
+            return "Property with ID: " + id + " successfully deleted from your list.";
         } catch (Exception e) {
             throw new NotFoundException("Property with that ID does not exist");
         } finally {

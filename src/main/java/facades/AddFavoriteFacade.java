@@ -1,30 +1,30 @@
 
 package facades;
 
-import dto.TestDTO;
-import entities.TestEntity;
+import dto.AddFavoriteDTO;
+import entities.AddFavoriteEntity;
 import errorhandling.AlreadyInUseException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-public class TestFacade {
+public class AddFavoriteFacade {
 
     
-    private static TestFacade instance;
+    private static AddFavoriteFacade instance;
     private static EntityManagerFactory emf;
     
-    private TestFacade() {}
+    private AddFavoriteFacade() {}
     
     /**
      * 
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static TestFacade getFacadeExample(EntityManagerFactory _emf) {
+    public static AddFavoriteFacade getFacadeExample(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new TestFacade();
+            instance = new AddFavoriteFacade();
         }
         return instance;
     }
@@ -33,7 +33,7 @@ public class TestFacade {
         return emf.createEntityManager();
     }
     
-    public TestDTO addTestObject(TestEntity t) throws AlreadyInUseException{
+    public AddFavoriteDTO addTestObject(AddFavoriteEntity t) throws AlreadyInUseException{
         
         EntityManager em = getEntityManager();
         
@@ -41,7 +41,7 @@ public class TestFacade {
             em.getTransaction().begin();
                 em.persist(t);
             em.getTransaction().commit();
-            return new TestDTO(t);
+            return new AddFavoriteDTO(t);
         } catch (Exception e) {
             throw new AlreadyInUseException("This property is already saved to favorites.");
         }

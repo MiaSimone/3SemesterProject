@@ -1,13 +1,20 @@
 
-package dto;
+package entities;
 
-import entities.TestEntity;
-import java.util.Objects;
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+//@NamedQuery(name = "FavoriteProperty.deleteAllRows", query = "DELETE from FavoriteProperty")
+@Table(name = "favoriteProperties")
+public class AddFavoriteEntity implements Serializable {
 
-public class TestDTO {
-    
+    private static final long serialVersionUID = 1L;
+    @Id
     private String prop_id;
+    
     private String rdc_web_url;
     private String type;
     private String size;
@@ -21,22 +28,24 @@ public class TestDTO {
     private String county;
     private String price;
 
-    public TestDTO() {}
+    public AddFavoriteEntity() {}
 
-    public TestDTO(TestEntity t) {
-        this.prop_id = t.getProp_id();
-        this.rdc_web_url = t.getRdc_web_url();
-        this.type = t.getProp_type();
-        this.size = t.getSize();
-        this.units = t.getUnits();
-        this.thumbnail = t.getThumbnail();
-        this.city = t.getCity();
-        this.line = t.getLine();
-        this.postal_code = t.getPostal_code();
-        this.state_code = t.getState_code();
-        this.state = t.getState();
-        this.county = t.getCounty();
-        this.price = t.getPrice();
+    public AddFavoriteEntity(String prop_id, String rdc_web_url, String prop_type, String size, 
+            String units, String thumbnail, String city, String line, String postal_code, 
+            String state_code, String state, String county, String price) {
+        this.prop_id = prop_id;
+        this.rdc_web_url = rdc_web_url;
+        this.type = prop_type;
+        this.size = size;
+        this.units = units;
+        this.thumbnail = thumbnail;
+        this.city = city;
+        this.line = line;
+        this.postal_code = postal_code;
+        this.state_code = state_code;
+        this.state = state;
+        this.county = county;
+        this.price = price;
     }
 
     public String getProp_id() {
@@ -142,33 +151,8 @@ public class TestDTO {
     public void setPrice(String price) {
         this.price = price;
     }
+    
+    
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TestDTO other = (TestDTO) obj;
-        if (!Objects.equals(this.prop_id, other.prop_id)) {
-            return false;
-        }
-        return true;
-    }
-    
-    
-    
-    
     
 }

@@ -103,17 +103,19 @@ public class FavoriteProperty implements Serializable {
     public FavoriteProperty() {
     }
 
-    public FavoriteProperty(String propId, String rdcWebUrl, String type, String size, String units, String thumbnail, String city, String line, String postalCode, String stateCode, String state, String county, String price) {
-        this.propId = propId;
-        this.rdcWebUrl = rdcWebUrl;
-        this.type = type;
+    public FavoriteProperty(String prop_id, String rdc_web_url, String prop_type, String size, 
+            String units, String thumbnail, String city, String line, String postal_code, 
+            String state_code, String state, String county, String price) {
+        this.propId = prop_id;
+        this.rdcWebUrl = rdc_web_url;
+        this.type = prop_type;
         this.size = size;
         this.units = units;
         this.thumbnail = thumbnail;
         this.city = city;
         this.line = line;
-        this.postalCode = postalCode;
-        this.stateCode = stateCode;
+        this.postalCode = postal_code;
+        this.stateCode = state_code;
         this.state = state;
         this.county = county;
         this.price = price;
