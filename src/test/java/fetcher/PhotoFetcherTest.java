@@ -13,12 +13,10 @@ import io.restassured.RestAssured;
 import io.restassured.parsing.Parser;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URI;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -28,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.EMF_Creator;
 
 /**
  *
@@ -45,7 +42,6 @@ public class PhotoFetcherTest {
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
-    private static EntityManagerFactory emf;
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -53,14 +49,9 @@ public class PhotoFetcherTest {
     }
 
     @BeforeAll
-    public static void setUpClass() throws IOException {
-        EMF_Creator.startREST_TestWithDB();
-        emf = EMF_Creator.createEntityManagerFactoryForTest();
-
+    public static void setUpClass(){
         httpServer = startServer();
-        httpServer.start();
-        while (!httpServer.isStarted()) {
-        }
+        
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
@@ -68,9 +59,9 @@ public class PhotoFetcherTest {
 
     @AfterAll
     public static void closeTestServer() {
-        EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
     }
+    
     @BeforeEach
     public void setUp(){
     }

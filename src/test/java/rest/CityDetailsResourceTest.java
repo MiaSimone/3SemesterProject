@@ -24,6 +24,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static rest.PhotoResourceTest.startServer;
 import utils.EMF_Creator;
 
 /**
@@ -39,24 +40,16 @@ public class CityDetailsResourceTest {
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
-    private static EntityManagerFactory emf;
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
-
+    
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
 
     @BeforeAll
-    public static void setUpClass() throws IOException {
-        EMF_Creator.startREST_TestWithDB();
-        emf = EMF_Creator.createEntityManagerFactoryForTest();
-
+    public static void setUpClass(){
         httpServer = startServer();
-        httpServer.start();
-        while (!httpServer.isStarted()) {
-        }
+        
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
@@ -93,7 +86,7 @@ public class CityDetailsResourceTest {
     }
     
     // Exceptions:
-    /*
+    
       @Test
         public void testGetRefException() throws Exception {
             System.out.println("TESTING - getting PhotoRef exception");
@@ -107,6 +100,6 @@ public class CityDetailsResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.INTERNAL_SERVER_ERROR_500.getStatusCode())
                 .body("message", equalTo("Internal Server Error"));
-        }*/
+        }
 
 }

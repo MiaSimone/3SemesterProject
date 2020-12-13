@@ -40,15 +40,13 @@ public class LoginEndpointTest {
     }
 
     @BeforeAll
-    public static void setUpClass() throws IOException {
+    public static void setUpClass(){
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
         
         httpServer = startServer();
-        httpServer.start();
-        while (!httpServer.isStarted()) {
-        }
+        
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;

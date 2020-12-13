@@ -38,9 +38,6 @@ public class PhotoResourceTest {
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
-    private static EntityManagerFactory emf;
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -48,14 +45,9 @@ public class PhotoResourceTest {
     }
 
     @BeforeAll
-    public static void setUpClass() throws IOException {
-        EMF_Creator.startREST_TestWithDB();
-        emf = EMF_Creator.createEntityManagerFactoryForTest();
-
+    public static void setUpClass(){
         httpServer = startServer();
-        httpServer.start();
-        while (!httpServer.isStarted()) {
-        }
+        
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
@@ -63,7 +55,6 @@ public class PhotoResourceTest {
 
     @AfterAll
     public static void closeTestServer() {
-        EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
     }
     
