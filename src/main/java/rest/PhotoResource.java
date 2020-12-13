@@ -46,7 +46,9 @@ public class PhotoResource {
         } else {
             try {
                 //File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject-Backend/apikey.txt");
-                File myObj = new File("C:/apikey.txt");
+                //File myObj = new File("C:/apikey.txt");
+                File myObj = new File(System.getProperty("c.home"), "C:/apikey.txt");
+                File apiTxt = new File (myObj, "apikey.txt");
                 
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
