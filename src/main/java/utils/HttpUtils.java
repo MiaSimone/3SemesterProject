@@ -35,7 +35,7 @@ public class HttpUtils {
         con.setRequestProperty("Accept", "application/json");
         con.setRequestProperty("x-rapidapi-key", "d12379afb6msh4e1abe29e50bca0p15e49ejsn56af46069613");
         con.setRequestProperty("x-rapidapi-host", "wft-geo-db.p.rapidapi.com");
-
+        
         Scanner scan = new Scanner(con.getInputStream());
         String jsonStr = "";
         

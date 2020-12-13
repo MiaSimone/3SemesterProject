@@ -74,7 +74,7 @@ public class CityDetailsFetcher {
         
         String standartJSON = gson.toJson(sDTO);
         
-        System.out.println(standartJSON);
+        //System.out.println(standartJSON);
         
         return standartJSON;
     }

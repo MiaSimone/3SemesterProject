@@ -47,7 +47,7 @@ public class PhotoResource {
             try {
                 //File myObj = new File("C:/Users/miade/Documents/NetBeansProjects/3SemesterProject-Backend/apikey.txt");
                 File myObj = new File("C:/apikey.txt");
-                System.out.println(myObj.getAbsolutePath());
+                
                 Scanner myReader = new Scanner(myObj);
                 while (myReader.hasNextLine()) {
                   String data = myReader.nextLine();
