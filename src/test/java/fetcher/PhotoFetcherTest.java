@@ -36,8 +36,7 @@ import org.junit.jupiter.api.Test;
 
 public class PhotoFetcherTest {
     private static final int SERVER_PORT = 7777;
-    //private static final String SERVER_URL = "http://localhost/api";
-    private static final String SERVER_URL = "https://swes.me/3semprojectbackend/api";
+    private static final String SERVER_URL = "http://localhost/api";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static ExecutorService es = Executors.newCachedThreadPool();
 
