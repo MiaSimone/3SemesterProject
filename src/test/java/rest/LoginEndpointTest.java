@@ -7,6 +7,7 @@ import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
+import java.io.IOException;
 import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -20,6 +21,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import static rest.PhotoResourceTest.startServer;
 import utils.EMF_Creator;
 
 @Disabled
@@ -38,13 +40,15 @@ public class LoginEndpointTest {
     }
 
     @BeforeAll
-    public static void setUpClass() {
+    public static void setUpClass() throws IOException {
         //This method must be called before you request the EntityManagerFactory
         EMF_Creator.startREST_TestWithDB();
         emf = EMF_Creator.createEntityManagerFactoryForTest();
-
+        
         httpServer = startServer();
-        //Setup RestAssured
+        httpServer.start();
+        while (!httpServer.isStarted()) {
+        }
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;

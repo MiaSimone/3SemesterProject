@@ -5,26 +5,25 @@
  */
 package rest;
 
-import dto.StandartDTO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
-import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
+import java.io.IOException;
 import java.net.URI;
-import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import utils.EMF_Creator;
 
 /**
  *
@@ -39,6 +38,9 @@ public class PhotoResourceTest {
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
+    private static EntityManagerFactory emf;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
 
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
@@ -46,10 +48,14 @@ public class PhotoResourceTest {
     }
 
     @BeforeAll
-    public static void setUpClass() {
+    public static void setUpClass() throws IOException {
+        EMF_Creator.startREST_TestWithDB();
+        emf = EMF_Creator.createEntityManagerFactoryForTest();
 
         httpServer = startServer();
-        //Setup RestAssured
+        httpServer.start();
+        while (!httpServer.isStarted()) {
+        }
         RestAssured.baseURI = SERVER_URL;
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
@@ -57,10 +63,14 @@ public class PhotoResourceTest {
 
     @AfterAll
     public static void closeTestServer() {
+        EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
     }
-    @BeforeEach
+    
+    
+    @Test
     public void setUp(){
+        
     }
     
     
