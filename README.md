@@ -2,8 +2,7 @@
 
 # Getting Started
 
-You have to clone this project for the backend and this project for the frontend: https://github.com/MiaSimone/CA3-Frontend.
+You have to clone this project for the backend and this project for the frontend: https://github.com/swes42/3SemesterProject-Frontend.
 Change the remote server in the pom.xml file for deployment.
-Change the entity classes, dtos and so on to fit your project.
 
 In the frontend project you will need to change the url in settings.js to the remote server when deploying. It sould work without changing it when using it locally.
